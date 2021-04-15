@@ -3,6 +3,8 @@ package com.spring.springApp.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,34 +23,37 @@ public class PhotoController {
 	PhotoService photoService;
 	
 		@GetMapping("/photo")
-		private List<Photo> getAllPhotos() {
-			return photoService.getAllPhotos();
+		public ResponseEntity<List<Photo>> getAllPhotos() {
+			List<Photo> photo = photoService.getAllPhotos();
+			return new ResponseEntity<List<Photo>>(photo, HttpStatus.OK);
 		}
 
 		
 		@GetMapping("/photo/{idPhoto}")
-		private Photo getphoto(@PathVariable("idPhoto") Long idPhoto) {
-			return photoService.getProduitById(idPhoto);
+		public ResponseEntity<Photo> getphoto(@PathVariable("idPhoto") Long idPhoto) {
+			 photoService.getProduitById(idPhoto);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 
 		
 		@DeleteMapping("/photo/{idPhoto}")
-		private void deletephoto(@PathVariable("idPhoto") Long idPhoto) {
+		public ResponseEntity<?> deletephoto(@PathVariable("idPhoto") Long idPhoto) {
 			photoService.delete(idPhoto);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 
 	
 		@PostMapping("/photos")
-		private Long savephoto(@RequestBody Photo photos) {
+		public ResponseEntity<Long> savephoto(@RequestBody Photo photos) {
 			photoService.saveOrUpdate(photos);
-			return photos.getIdPhoto();
+			return new ResponseEntity<>(photos.getIdPhoto(), HttpStatus.CREATED);
 		}
 
 		
 		@PutMapping("/photos")
-		private Photo update(@RequestBody Photo photos) {
+		public ResponseEntity<Photo> update(@RequestBody Photo photos) {
 			photoService.saveOrUpdate(photos);
-			return photos;
+			return new ResponseEntity<>(photos, HttpStatus.ACCEPTED);
 		}
 	
 

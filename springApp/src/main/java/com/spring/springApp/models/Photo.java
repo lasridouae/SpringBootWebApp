@@ -15,24 +15,42 @@ public class Photo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idPhoto;
 	private String PhotoName;
+	private String url;
+	
 	@ManyToOne
     @JoinColumn(name = "idProduit")
     private Produit produit;
 
-	public Photo(String photoName) {
+	
+	public Photo(String photoName, String url, Produit produit) {
 		super();
 		PhotoName = photoName;
+		this.url = url;
+		this.produit = produit;
 	}
 
-	public Long getId() {
-		return id;
+	public Photo() {
+	
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Long getIdPhoto() {
+		return idPhoto;
+	}
+
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public void setIdPhoto(Long idPhoto) {
+		this.idPhoto = idPhoto;
 	}
 
 	public String getPhotoName() {
